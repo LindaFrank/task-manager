@@ -1,0 +1,29 @@
+// Prisma schema for the Personal Task Manager
+// Docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TaskCategory {
+  WORK
+  PERSONAL
+  LEARNING
+  OTHER
+}
+
+model Task {
+  id          String       @id @default(cuid())
+  name        String
+  description String?
+  dueDate     DateTime?
+  category    TaskCategory @default(OTHER)
+  completed   Boolean      @default(false)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
